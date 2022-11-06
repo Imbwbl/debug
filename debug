@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+if [ -v 3 ]
+    then
+        while inotifywait -qq -r -e modify $2; do
+        if tail -q -n1 $2; then
+        clear
+        $1 $2 && ./$3
+        fi
+        done
+elif [ -v 2 ]
+    then
+        while inotifywait -qq -r -e modify $2; do
+        if tail -q -n1 $2; then
+        clear
+        $1 $2
+        fi
+        done
+elif [ -v 1 ]
+    then
+        while inotifywait -qq -r -e modify $1; do
+        if tail -q -n1 $1; then
+        clear
+        ./$1
+        fi
+        done
+fi
